@@ -23,7 +23,7 @@ import Navi from './components/navi.vue'
         },
         methods: {
             async checkLogin(){
-                let res = await fetch('/user/profile');
+                let res = await fetch('/user/profile', {credentials: 'include'});
                 if (res.status != 200){
                     window.location = '/user/login';
                 } else {

@@ -18,6 +18,7 @@ router.get('/login/callback', function (req, res, next) {
 
   UserService.tokenLogin(token)
     .then((user)=>{
+      console.log(user);
       req.session.uid = user['id'];
       req.session.username = user['username'];
       req.session.email = user['email'];
@@ -27,15 +28,16 @@ router.get('/login/callback', function (req, res, next) {
 });
 
 router.get('/profile', function (req, res, next) {
-  if (req.session.uid){
-    UserService.getByUid(res.session.uid)
-      .then((user)=>{
-        res.json(user);
-      })
-      .catch(next);
-  } else {
-    res.status(401);
+  if (!req.session.uid) {
+    return res.status(401).json({
+      msg: 'need login'
+    })
   }
+  UserService.getByUid(req.session.uid)
+    .then((user) => {
+      res.json(user);
+    })
+    .catch(next);
 });
 
 module.exports = router;

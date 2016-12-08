@@ -10,3 +10,5 @@ exports.create = function (uid, record) {
   record.uid = uid;
   return RecordModel.create(record);
 };
+
+exports.findByUid = (uid)=> RecordModel.findByUid(uid);

@@ -17,8 +17,19 @@
 <script>
     export default{
         data(){
+            this.initData();
             return{
                 data: []
+            }
+        },
+        methods: {
+            async initData(){
+                let res = await fetch('/record', {credentials: 'include'});
+                let data = await res.json();
+                data.forEach((row)=>{
+                    row.date = new Date(row.date).toLocaleDateString();
+                });
+                this.data = data;
             }
         }
     }

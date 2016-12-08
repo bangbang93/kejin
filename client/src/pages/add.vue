@@ -55,16 +55,28 @@
 <script>
     export default{
         data(){
-            fetch('/record/games')
+            fetch('/record/games', {credentials: 'include'})
                 .then((res)=>{
                     return res.json();
                 })
                 .then((body)=>{
                     this.games = body;
-                })
+                });
             return{
                 games: [],
-                form: {
+                form: this.emptyForm(),
+            }
+        },
+        methods: {
+            querySearch(search, cb){
+                let games = this.games;
+                games = games.map((game)=>({
+                    value: game
+                }));
+                cb(games);
+            },
+            emptyForm(){
+                return {
                     date: '',
                     game: '',
                     price: '',
@@ -75,26 +87,24 @@
                     gains: '',
                     expend: '',
                     surplus: '',
-                }
-            }
-        },
-        methods: {
-            querySearch(search, cb){
-                let games = this.games;
-                games = games.map((game)=>({
-                    value: game
-                }))
-                cb(games);
+                };
             },
             async onSubmit(){
                 let res = await fetch('/record', {
                     method: 'POST',
                     body: JSON.stringify(this.form),
                     headers: new Headers({
-                    'content-type': 'application/json'
-                    })
+                        'content-type': 'application/json'
+                    }),
+                    credentials: 'include',
                 });
-                console.log(res);
+                if (res.status == 201){
+                    this.$message({
+                      message: '创建成功',
+                      type: 'success'
+                    });
+                    this.form = this.emptyForm();
+                }
             }
         }
     }
