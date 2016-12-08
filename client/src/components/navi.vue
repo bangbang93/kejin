@@ -1,8 +1,8 @@
 <template>
     <div>
-        <el-menu default-active="1" class="el-menu-demo" mode="horizontal" @select="handleSelect">
-            <el-menu-item index="1">查看课金记录</el-menu-item>
-            <el-menu-item index="2">添加课金记录</el-menu-item>
+        <el-menu default-active="1" class="el-menu-demo" mode="horizontal" :router="true">
+            <el-menu-item index="1" :route="{name: 'list'}">查看课金记录</el-menu-item>
+            <el-menu-item index="2" :route="{name: 'add'}">添加课金记录</el-menu-item>
         </el-menu>
     </div>
 </template>

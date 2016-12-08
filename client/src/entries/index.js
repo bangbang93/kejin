@@ -10,6 +10,7 @@ import App from '../app.vue'
 
 import IndexPage from '../pages/index.vue'
 import ListPage from '../pages/list.vue'
+import AddPage from '../pages/add.vue'
 
 require('es6-promise').polyfill();
 
@@ -21,6 +22,11 @@ const routes = [{
   component: ListPage,
   name: 'list',
 }, {
+  path: '/add',
+  component: AddPage,
+  name: 'add',
+},
+  {
   path: '*',
   redirect: 'list'
 }];
