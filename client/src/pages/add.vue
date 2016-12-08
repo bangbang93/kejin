@@ -39,7 +39,7 @@
                         <el-input-number v-model="form.surplus"></el-input-number>
                     </el-form-item>
                     <el-form-item>
-                        <el-button type="primary" @click="onSubmit">立即创建</el-button>
+                        <el-button type="primary" @click="onSubmit" :loading="loading">立即创建</el-button>
                         <el-button>取消</el-button>
                     </el-form-item>
                 </el-form>
@@ -65,6 +65,7 @@
             return{
                 games: [],
                 form: this.emptyForm(),
+                loading: false,
             }
         },
         methods: {
@@ -90,6 +91,7 @@
                 };
             },
             async onSubmit(){
+                this.loading = true;
                 let res = await fetch('/record', {
                     method: 'POST',
                     body: JSON.stringify(this.form),
@@ -105,6 +107,7 @@
                     });
                     this.form = this.emptyForm();
                 }
+                this.loading = false;
             }
         }
     }

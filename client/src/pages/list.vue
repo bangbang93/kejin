@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="container">
         <el-table :data="data">
             <el-table-column prop="date" label="日期"></el-table-column>
             <el-table-column prop="game" label="游戏"></el-table-column>
