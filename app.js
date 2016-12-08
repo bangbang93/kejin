@@ -33,7 +33,7 @@ const RedisStore = require('connect-redis')(session);
 app.use(cookieParser());
 app.use(session({
   store: new RedisStore({
-    prefix: 'authSession'
+    prefix: 'kejinSession'
   }),
   secret: 'iivrdWiKUpfIhb0OEQgmqTOrcroiHTJ0jF9FS48VrFo=',
   resave: false,
