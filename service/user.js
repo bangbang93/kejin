@@ -3,6 +3,7 @@
  */
 'use strict';
 const request = require('co-request');
+const UserModel = require('../model/user');
 
 exports.tokenLogin = function (token) {
   return request.post('https://auth.bangbang93.com/user/token', {
@@ -26,7 +27,9 @@ exports.tokenLogin = function (token) {
     })
     .then((res)=>{
       if (res.statusCode == 200){
-        return res.body;
+        let user = res.body;
+        user.uid = user.id;
+        return UserModel.upsert(user.uid, user).return(user);
       } else {
         let err = new Error('auth error');
         err.status = res.statusCode;
