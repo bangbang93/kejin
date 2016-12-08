@@ -55,13 +55,7 @@
 <script>
     export default{
         data(){
-            fetch('/record/games', {credentials: 'include'})
-                .then((res)=>{
-                    return res.json();
-                })
-                .then((body)=>{
-                    this.games = body;
-                });
+          this.listGame();
             return{
                 games: [],
                 form: this.emptyForm(),
@@ -69,6 +63,10 @@
             }
         },
         methods: {
+            async listGame(){
+              let res = await fetch('/record/games', {credentials: 'include'});
+              this.games = await res.json();
+            },
             querySearch(search, cb){
                 let games = this.games;
                 games = games.map((game)=>({
@@ -106,6 +104,7 @@
                       type: 'success'
                     });
                     this.form = this.emptyForm();
+                    this.listGame();
                 }
                 this.loading = false;
             }
