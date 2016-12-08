@@ -27,7 +27,15 @@ router.get('/login/callback', function (req, res, next) {
 });
 
 router.get('/profile', function (req, res, next) {
-  res.json(req.session);
+  if (req.session.uid){
+    UserService.getByUid(res.session.uid)
+      .then((user)=>{
+        res.json(user);
+      })
+      .catch(next);
+  } else {
+    res.status(401);
+  }
 });
 
 module.exports = router;

@@ -38,3 +38,5 @@ exports.tokenLogin = function (token) {
       }
     })
 };
+
+exports.getByUid = (uid)=> UserModel.getByUid(uid);

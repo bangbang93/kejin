@@ -60,6 +60,7 @@ app.use(function(req, res, next) {
 // error handler
 if (app.get('env') == 'development'){
   app.use(function (err, req, res, next) {
+    console.error(err);
     res.status(500).json({
       message: err.message,
       err,
@@ -67,6 +68,7 @@ if (app.get('env') == 'development'){
   })
 } else {
   app.use(function(err, req, res, next) {
+    console.error(err);
     res.status(500).json({
       message: err.message,
     })

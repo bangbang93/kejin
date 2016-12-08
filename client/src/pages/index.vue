@@ -1,8 +1,6 @@
 <template>
     <div>
-        <header-component/>
         <div>this is template body</div>
-        <other-component/>
     </div>
 </template>
 <style>
@@ -11,10 +9,24 @@
     }
 </style>
 <script>
+    import 'whatwg-fetch'
+
     export default{
         data(){
+            this.checkLogin();
             return{
-                msg:'hello vue'
+                msg:'hello vue',
+                user: {},
+            }
+        },
+        methods: {
+            async checkLogin(){
+                let res = await fetch('/user/profile');
+                if (res.status != 200){
+                    window.location = '/user/login';
+                } else {
+                    this.user = await res.json();
+                }
             }
         }
     }
