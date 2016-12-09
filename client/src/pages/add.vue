@@ -68,10 +68,15 @@
               this.games = await res.json();
             },
             querySearch(search, cb){
+                if (search){
+                  search = search.toLowerCase()
+                }
                 let games = this.games;
-                games = games.map((game)=>({
+                games = games.filter((game)=>
+                    game.toLowerCase().indexOf(search) != -1)
+                  .map((game)=>({
                     value: game
-                }));
+                  }));
                 cb(games);
             },
             emptyForm(){
