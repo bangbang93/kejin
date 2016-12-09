@@ -4,7 +4,7 @@
 'use strict';
 const RecordModel = require('../model/record');
 
-exports.listGames = ()=>RecordModel.listGames();
+exports.listGames = (uid)=>RecordModel.listGames(uid);
 
 exports.create = function (uid, record) {
   record.uid = uid;

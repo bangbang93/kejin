@@ -24,8 +24,10 @@ exports.create = function (record) {
   return Model.create(record);
 };
 
-exports.listGames = function () {
-  return Model.distinct('game').exec();
+exports.listGames = function (uid) {
+  return Model.distinct('game', {
+    uid
+  }).exec();
 };
 
 exports.findByUid = function (uid) {

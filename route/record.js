@@ -17,7 +17,8 @@ router.use(function (req, res, next) {
 
 
 router.get('/games', function (req, res, next) {
-  RecordService.listGames()
+  let uid = req.session.uid;
+  RecordService.listGames(uid)
     .then((games)=>{
       res.json(games);
     })
