@@ -26,18 +26,18 @@
                     <el-form-item label="出货情况">
                         <el-input v-model="form.shipment"></el-input>
                     </el-form-item>
-                    <el-form-item label="本月工资">
-                        <el-input-number v-model="form.salary"></el-input-number>
-                    </el-form-item>
-                    <el-form-item label="本月外快">
-                        <el-input-number v-model="form.gains"></el-input-number>
-                    </el-form-item>
-                    <el-form-item label="本月支出">
-                        <el-input-number v-model="form.expend"></el-input-number>
-                    </el-form-item>
-                    <el-form-item label="本月结余">
-                        <el-input-number v-model="form.surplus"></el-input-number>
-                    </el-form-item>
+                    <!--<el-form-item label="本月工资">-->
+                        <!--<el-input-number v-model="form.salary"></el-input-number>-->
+                    <!--</el-form-item>-->
+                    <!--<el-form-item label="本月外快">-->
+                        <!--<el-input-number v-model="form.gains"></el-input-number>-->
+                    <!--</el-form-item>-->
+                    <!--<el-form-item label="本月支出">-->
+                        <!--<el-input-number v-model="form.expend"></el-input-number>-->
+                    <!--</el-form-item>-->
+                    <!--<el-form-item label="本月结余">-->
+                        <!--<el-input-number v-model="form.surplus"></el-input-number>-->
+                    <!--</el-form-item>-->
                     <el-form-item>
                         <el-button type="primary" @click="onSubmit" :loading="loading">立即创建</el-button>
                         <el-button>取消</el-button>
@@ -76,11 +76,11 @@
             },
             emptyForm(){
                 return {
-                    date: '',
+                    date: new Date(),
                     game: '',
-                    price: '',
+                    price: 0,
                     target: '',
-                    time: '',
+                    time: 1,
                     shipment: '',
                     salary: '',
                     gains: '',
