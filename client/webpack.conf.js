@@ -46,10 +46,10 @@ if (process.env.NODE_ENV == 'development'){
         except: ['$super', '$', 'exports', 'require']
       }
     }),
-    new CleanPlugin(config.output.path, {
-      root: require('path').resolve('..'),
-      exclude: ['.gitkeep']
-    }),
+    // new CleanPlugin(config.output.path, {
+    //   root: require('path').resolve('..'),
+    //   exclude: ['.gitkeep']
+    // }),
     new webpack.optimize.CommonsChunkPlugin('vendor.js'),
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.optimize.DedupePlugin(),
