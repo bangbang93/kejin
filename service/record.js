@@ -12,3 +12,17 @@ exports.create = function (uid, record) {
 };
 
 exports.findByUid = (uid)=> RecordModel.findByUid(uid);
+
+exports.edit = function (uid, id, record) {
+  return RecordModel.getById(id)
+    .then((originRecord)=>{
+      if (originRecord.uid != uid){
+        throw new Error('not owner');
+      }
+    })
+    .then(()=>{
+      return RecordModel.update(id, record);
+    });
+};
+
+exports.getById = (id)=> RecordModel.getById(id);

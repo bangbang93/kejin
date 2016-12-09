@@ -39,7 +39,7 @@
                         <!--<el-input-number v-model="form.surplus"></el-input-number>-->
                     <!--</el-form-item>-->
                     <el-form-item>
-                        <el-button type="primary" @click="onSubmit" :loading="loading">立即创建</el-button>
+                        <el-button type="primary" @click="onSubmit" :loading="loading">保存</el-button>
                         <el-button>取消</el-button>
                     </el-form-item>
                 </el-form>
@@ -55,7 +55,12 @@
 <script>
     export default{
         data(){
-          this.listGame();
+              if (this.$route.params['id']){
+                this.initEdit(this.$route.params['id']);
+                this.isEditor = true;
+                this.id = this.$route.params['id'];
+              }
+              this.listGame();
             return{
                 games: [],
                 form: this.emptyForm(),
@@ -95,23 +100,49 @@
             },
             async onSubmit(){
                 this.loading = true;
-                let res = await fetch('/record', {
+                if (this.isEditor){
+                  let res = await fetch(`/record/${this.id}`, {
+                    method: 'PUT',
+                    body: JSON.stringify(this.form),
+                    headers: new Headers({
+                      'content-type': 'application/json'
+                    }),
+                    credentials: 'include',
+                  });
+                  if (res.status == 200){
+                    this.$message({
+                      message: '保存成功',
+                      type: 'success'
+                    });
+                    this.listGame();
+                  }
+                } else {
+                  let res = await fetch('/record', {
                     method: 'POST',
                     body: JSON.stringify(this.form),
                     headers: new Headers({
-                        'content-type': 'application/json'
+                      'content-type': 'application/json'
                     }),
                     credentials: 'include',
-                });
-                if (res.status == 201){
+                  });
+                  if (res.status == 201){
                     this.$message({
                       message: '创建成功',
                       type: 'success'
                     });
                     this.form = this.emptyForm();
                     this.listGame();
+                  }
                 }
                 this.loading = false;
+            },
+            async initEdit(id){
+              let res = await fetch(`/record/${id}`, {
+                credentials: 'include',
+              });
+              if (res.status == 200){
+                this.form = await res.json();
+              }
             }
         }
     }

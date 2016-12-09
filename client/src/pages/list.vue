@@ -11,6 +11,17 @@
             <!--<el-table-column prop="gains" label="外快"></el-table-column>-->
             <!--<el-table-column prop="expend" label="支出"></el-table-column>-->
             <!--<el-table-column prop="surplus" label="结余"></el-table-column>-->
+            <el-table-column
+                    inline-template
+                    label="操作">
+                <div>
+                    <el-button
+                            size="small"
+                            @click="handleEdit($index, row)">
+                        编辑
+                    </el-button>
+                </div>
+            </el-table-column>
         </el-table>
     </div>
 </template>
@@ -30,6 +41,9 @@
                     row.date = new Date(row.date).toLocaleDateString();
                 });
                 this.data = data;
+            },
+            async handleEdit(index, row){
+                this.$router.push({name: 'edit', params: {id: row._id}});
             }
         }
     }

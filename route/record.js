@@ -48,6 +48,44 @@ router.get('/', function (req, res, next) {
 
 });
 
+router.put('/:id', function (req, res, next) {
+  let id = req.params.id;
+  let uid = req.session.uid;
+
+  let record = req.body;
+
+  RecordService.edit(uid, id, record)
+    .then(()=>{
+      res.status(200).json({
+        msg: 'success'
+      })
+    })
+    .catch((err)=>{
+      if (err.message == 'not owner'){
+        return res.status(403).json({
+          msg: err.message
+        })
+      }
+      next(err);
+    })
+});
+
+router.get('/:id', function (req, res, next) {
+  let id = req.params.id;
+  let uid = req.session.uid;
+
+  RecordService.getById(id)
+    .then((record)=>{
+      if (record.uid != uid){
+        return res.status(403).json({
+          msg: 'not owner'
+        });
+      }
+      return res.json(record);
+    })
+    .catch(next);
+});
+
 
 
 module.exports = router;

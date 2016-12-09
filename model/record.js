@@ -20,6 +20,10 @@ let Schema = new mongoose.Schema({
 
 let Model = mongoose.model('record', Schema);
 
+exports.getById = function (id) {
+  return Model.findById(id);
+};
+
 exports.create = function (record) {
   return Model.create(record);
 };
@@ -34,4 +38,10 @@ exports.findByUid = function (uid) {
   return Model.find({
     uid
   }).exec();
+};
+
+exports.update = function (id, record) {
+  return Model.update({
+    _id: id
+  }, record);
 };
