@@ -9,6 +9,28 @@ const bodyParser = require('body-parser');
 const app = express();
 app.set('trust proxy', 'loopback');
 
+const session = require('express-session');
+const RedisStore = require('connect-redis')(session);
+
+app.use(cookieParser());
+app.use(session({
+  store: new RedisStore({
+    prefix: 'kejinSession'
+  }),
+  secret: 'iivrdWiKUpfIhb0OEQgmqTOrcroiHTJ0jF9FS48VrFo=',
+  resave: false,
+  saveUninitialized: false,
+}));
+
+// uncomment after placing your favicon in /public
+//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+
+app.use('/', require('./route/index'));
+
+require('express-simple-route')(path.join(__dirname, 'route'), app);
+
 if (app.get('env') == 'development'){
   app.use(logger('dev'));
   let webpack = require('webpack');
@@ -28,28 +50,7 @@ if (app.get('env') == 'development'){
   app.use(logger('combined'));
 }
 
-const session = require('express-session');
-const RedisStore = require('connect-redis')(session);
-
-app.use(cookieParser());
-app.use(session({
-  store: new RedisStore({
-    prefix: 'kejinSession'
-  }),
-  secret: 'iivrdWiKUpfIhb0OEQgmqTOrcroiHTJ0jF9FS48VrFo=',
-  resave: false,
-  saveUninitialized: false,
-}));
-
-// uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
-
-app.use('/', require('./route/index'));
-
-require('express-simple-route')(path.join(__dirname, 'route'), app);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -36,7 +36,9 @@ const routes = [{
 }];
 
 const router = new VueRouter({
-  routes
+  routes,
+  mode: 'history',
+  base: '/kejin'
 });
 
 const page = new Vue({
