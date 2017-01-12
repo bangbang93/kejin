@@ -18,7 +18,6 @@ router.get('/login/callback', function (req, res, next) {
 
   UserService.tokenLogin(token)
     .then((user)=>{
-      console.log(user);
       req.session.uid = user['id'];
       req.session.username = user['username'];
       req.session.email = user['email'];
